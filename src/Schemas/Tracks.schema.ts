@@ -1,10 +1,11 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { Document } from 'mongoose';
+import { Album } from './Album.schema';
 
 export type AlbumsDocument = Album & Document;
 
 @Schema()
-export class Category {
+export class Tracks {
   @Prop({ required: true })
   name: string;
 
@@ -23,4 +24,4 @@ export class Category {
 }
 
 
-export const CategorySchema = SchemaFactory.createForClass(Category);
+export const TracksSchema = SchemaFactory.createForClass(Tracks);
