@@ -2,7 +2,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { Document } from 'mongoose';
 import { Album } from './Album.schema';
 
-export type AlbumsDocument = Album & Document;
+export type TracksDocument = Tracks & Document;
 
 @Schema()
 export class Tracks {
@@ -20,7 +20,7 @@ export class Tracks {
   isPublished: boolean;
 
   @Prop({ref: typeof Album, required: true})
-  category: mongoose.Schema.Types.ObjectId;
+  album: mongoose.Schema.Types.ObjectId;
 }
 
 
