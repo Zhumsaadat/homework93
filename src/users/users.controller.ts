@@ -6,6 +6,7 @@ import { CreateUserDto } from './create-user.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { Request } from 'express';
 import { TokenAuthGuard } from '../token-auth/token-auth.guard';
+import { PermitGuard} from '../permit-auth/permit-auth.guard';
 
 @Controller('users')
 export class UsersController {
@@ -13,15 +14,8 @@ export class UsersController {
         @InjectModel(User.name) private readonly userModel: Model<UserDocument>,
     ) {}
 
-    @Get()
-    async getAll() {
-        return this.userModel.find();
-    }
-
-
     @Post()
     async registerUser (@Body() userDto: CreateUserDto){
-        console.log(userDto)
         const user = await new this.userModel({
             email: userDto.email,
             password: userDto.password,
@@ -30,7 +24,6 @@ export class UsersController {
         });
 
         await user.generateToken();
-        console.log(user.email, user.role, user.token)
         return user.save();
     }
 
@@ -40,7 +33,7 @@ export class UsersController {
         return req.user;
     }
 
-    @UseGuards(TokenAuthGuard)
+    @UseGuards(TokenAuthGuard, new PermitGuard('admin'))
     @Get('secret')
     async secret(@Req() req: Request) {
         return {message: 'Secret message'};
