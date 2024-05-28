@@ -1,5 +1,5 @@
 import { Body, Controller, Delete, Get, Param, Post, Query, UploadedFile, UseInterceptors } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
+import { InjectModel } from '@nestjs/mongoose'
 import { Model } from 'mongoose';
 import { Album, AlbumDocument } from '../Schemas/Album.schema';
 import { CreateAlbumDto } from './create-album.dto';

@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import mongoose, { Document } from 'mongoose';
+import mongoose, { Document, Types } from 'mongoose';
 import { Album } from './Album.schema';
 
 export type TracksDocument = Tracks & Document;
@@ -19,7 +19,17 @@ export class Tracks {
   @Prop()
   isPublished: boolean;
 
-  @Prop({ref: typeof Album, required: true})
+  @Prop({
+    ref: typeof Album,
+    required: true,
+    validate: {
+      validator:  async function(id: Types.ObjectId) {
+        const album = await this.model('Album').findById(id);
+        return Boolean(album);
+      },
+      message: 'Album does not exists!!!',
+    },
+  })
   album: mongoose.Schema.Types.ObjectId;
 }
 
