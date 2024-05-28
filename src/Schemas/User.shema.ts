@@ -7,7 +7,7 @@ export interface UserMethods{
     checkPassword(password: string): Promise<boolean>;
 }
 
-Schema()
+@Schema()
 export class User {
     @Prop({required: true, unique: true})
     email: string;
