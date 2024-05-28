@@ -14,6 +14,8 @@ import { User, UserSchema } from './Schemas/User.shema';
 import { AuthService } from './auth/auth.service';
 import { LocalStrategy } from './auth/local.strategy';
 import { PassportModule } from '@nestjs/passport';
+import { PermitGuard } from './permit-auth/permit-auth.guard';
+import { TokenAuthGuard } from './token-auth/token-auth.guard';
 
 @Module({
   imports: [
@@ -27,6 +29,6 @@ import { PassportModule } from '@nestjs/passport';
       PassportModule,
   ],
   controllers: [AppController, TracksController, CategoriesController, AlbumsController, ArtistsController, UsersController],
-  providers: [AppService, AuthService, LocalStrategy],
+  providers: [AppService, AuthService, LocalStrategy, TokenAuthGuard, PermitGuard],
 })
 export class AppModule {}
